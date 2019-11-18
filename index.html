@@ -48,32 +48,32 @@
     //= (this.innerHTML+1)%4
     //this.style.backgroundColor = 'gold'
     //this.style.backgroundColor = 'red'
-    var io = parseInt( this.parentNode.getAttribute("clk_time") );
+    var io = parseInt( this.getAttribute("clk_time") );
     //io = this.parentNode.clk_time;
     io+=1;
-    this.parentNode.setAttribute("clk_time",io);
+    this.setAttribute("clk_time",io);
     
     console.log(io);
     switch (io%4) {
     case 1:
-　    this.parentNode.style.backgroundColor = 'yellow';
-      this.innerHTML = "備料中";
+　    this.style.backgroundColor = 'yellow';
+      this.children[1].innerHTML = "備料中";
 　    break;
     case 2:
-　    this.parentNode.style.backgroundColor = 'greenyellow';
-      this.innerHTML = "備料完成";
+　    this.style.backgroundColor = 'greenyellow';
+      this.children[1].innerHTML = "備料完成";
 　    break;
     case 3:
-　    this.parentNode.style.backgroundColor = 'red';
-      this.innerHTML = "異常";
+　    this.style.backgroundColor = 'red';
+      this.children[1].innerHTML = "異常";
 　    break;
     case 0:
-　    this.parentNode.style.backgroundColor = 'transparent';
-      this.innerHTML = " ";
+　    this.style.backgroundColor = 'transparent';
+      this.children[1].innerHTML = " ";
 　    break;
     default:
-      this.parentNode.style.backgroundColor = 'greenyellow';
-      this.innerHTML = "備料完成";
+      this.style.backgroundColor = 'greenyellow';
+      this.children[1].innerHTML = "備料完成";
       }
 
     console.log(typeof this.innerHTML);
@@ -89,7 +89,8 @@
     {
       var row = table.insertRow(i);
       row.setAttribute("clk_time",0);
-      
+      row.addEventListener("click",change);
+
       console.log(row.getAttribute("clk_time"));
 
       //row.insertCell(1).addEventListener("click",change);
@@ -98,7 +99,7 @@
       een.style.maxWidth = "150px";
       
       var twee = row.insertCell(1);
-      twee.addEventListener("click",change);
+      //twee.addEventListener("click",change);
       //console.log(row.children);
       var drie = row.insertCell(2);
       drie.innerHTML = myObj.AS[i].part_no;
