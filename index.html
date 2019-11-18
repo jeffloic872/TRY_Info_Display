@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <style>
+  #chessboard {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center
+  }
+  td {
+  width: 60px;
+  height: 16px; 
+  border:1px solid #000;
+  padding: 1px 1px;
+  font-size: 15px
+}
+  }
+ 
+  }
+  </style>
+
+
+
+  <script language="javascript" type="text/javascript">
+
+  var xmlhttp = new XMLHttpRequest();
+  var myObj;
+  var cur_data_amt;
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+      myObj = JSON.parse(this.responseText);
+      cur_data_amt = myObj.AS.length;
+      }else{console.log("assss")}
+    };
+    xmlhttp.open("GET", "https://api.myjson.com/bins/ayw5i", true);
+    xmlhttp.send();
+  
+  var counter;
+  function change()
+  {
+    //var a = this.innerHTML
+    //this.innerHTML = typeof(a)
+    //= (this.innerHTML+1)%4
+    //this.style.backgroundColor = 'gold'
+    //this.style.backgroundColor = 'red'
+    var io = parseInt( this.parentNode.getAttribute("clk_time") );
+    //io = this.parentNode.clk_time;
+    io+=1;
+    this.parentNode.setAttribute("clk_time",io);
+    
+    console.log(io);
+    switch (io%4) {
+    case 1:
+　    this.parentNode.style.backgroundColor = 'yellow';
+      this.innerHTML = "備料中";
+　    break;
+    case 2:
+　    this.parentNode.style.backgroundColor = 'greenyellow';
+      this.innerHTML = "備料完成";
+　    break;
+    case 3:
+　    this.parentNode.style.backgroundColor = 'red';
+      this.innerHTML = "異常";
+　    break;
+    case 0:
+　    this.parentNode.style.backgroundColor = 'transparent';
+      this.innerHTML = " ";
+　    break;
+    default:
+      this.parentNode.style.backgroundColor = 'greenyellow';
+      this.innerHTML = "備料完成";
+      }
+
+    console.log(typeof this.innerHTML);
+  } 
+   
+  function myFunction() 
+  { 
+    
+    
+    
+    var table = document.getElementById("chessboard");
+     for (var i = 0; i < cur_data_amt; i++) 
+    {
+      var row = table.insertRow(i);
+      row.setAttribute("clk_time",0);
+      
+      console.log(row.getAttribute("clk_time"));
+
+      //row.insertCell(1).addEventListener("click",change);
+      var een = row.insertCell(0);
+      een.innerHTML = myObj.AS[i].order_no;
+      een.style.maxWidth = "150px";
+      
+      var twee = row.insertCell(1);
+      twee.addEventListener("click",change);
+      //console.log(row.children);
+      var drie = row.insertCell(2);
+      drie.innerHTML = myObj.AS[i].part_no;
+
+      var vier = row.insertCell(3);
+      vier.innerHTML = myObj.AS[i].part_desc;
+      //row.insertCell(3).style.width = "50px";
+      var vijf = row.insertCell(4);
+      vijf.innerHTML = myObj.AS[i].ord_qty;
+      
+      row.insertCell(5).setAttribute("id","s"+i.toString());
+
+      document.getElementById("s"+i.toString()).innerHTML = i
+    };
+  };
+
+  
+  </script>
+  <body>
+  <div class="teTopPanel">
+  </div>
+  <div>
+  <button type="button" onclick = "myFunction()">Generate</botton>
+  </div>
+  <div class = "Tabs">
+    <table id="chessboard" style="width: 100%"></table>
+
+  </div>
+  </body>
+</html>
